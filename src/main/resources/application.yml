@@ -1,21 +1,44 @@
 spring:
-  application:
-    name: weather-producer-consumer
   kafka:
     bootstrap-servers: localhost:9092
-    properties:
-      schema.registry.url: http://localhost:8081
-
+    consumer:
+      group-id: weather-app-avro
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
-        spring.json.add.type.headers: false
-    consumer:
-      group-id: weather-app-avro
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-      auto-offset-reset: latest
-      properties:
-        spring.json.value.default.type: springkafka.WeatherReading
-        spring.json.trusted.packages: "*"
+        schema.registry.url: http://localhost:8081
+
+# Application-specific settings
+app:
+  kafka:
+    topics:
+      weather: weather
+      weather-dlq: weather-dlq
+    retry:
+      attempts: 3
+      backoff: 1000
+
+logging:
+  level:
+    org.apache.kafka: INFO
+    org.springframework.kafka: DEBUG
+
+# Actuator configuration for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,kafka
+  endpoint:
+    health:
+      show-details: always
+  health:
+    kafka:
+      enabled: true
