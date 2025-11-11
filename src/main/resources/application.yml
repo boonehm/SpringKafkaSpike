@@ -42,3 +42,10 @@ management:
   health:
     kafka:
       enabled: true
+
+# Graceful shutdown
+server:
+  shutdown: graceful
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s

@@ -1,0 +1,27 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:kafka-cluster:9092}
+    consumer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+        security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+        sasl.mechanism: ${KAFKA_SASL_MECHANISM:PLAIN}
+        sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG}
+    producer:
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+        security.protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+        sasl.mechanism: ${KAFKA_SASL_MECHANISM:PLAIN}
+        sasl.jaas.config: ${KAFKA_SASL_JAAS_CONFIG}
+
+app:
+  kafka:
+    retry:
+      attempts: 5
+      backoff: 2000
+
+logging:
+  level:
+    org.springframework.kafka: WARN
+    springkafka: INFO
+    root: WARN
