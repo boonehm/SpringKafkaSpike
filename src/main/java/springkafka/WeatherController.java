@@ -16,8 +16,8 @@ public class WeatherController {
     public String send(@PathVariable String city, @PathVariable double temp) {
         var r = WeatherReading.newBuilder()
                 .setCity(city)
-                .setTempF(temp)
-                .setAt(Instant.now().toString())
+                .setTemperature(temp)
+                .setTimestamp(Instant.now().toString())
                 .build();
         producer.send(r);
         return "ok";

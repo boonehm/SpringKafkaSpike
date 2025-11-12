@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "WeatherReading",
+  "namespace": "org.example.springkafka.avro",
+  "fields": [
+    {"name": "city", "type": "string"},
+    {"name": "temperature", "type": "double"},
+    {"name": "timestamp", "type": "string"}
+  ]
+}

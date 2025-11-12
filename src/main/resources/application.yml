@@ -14,6 +14,10 @@ spring:
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
         schema.registry.url: http://localhost:8081
+    listener:
+      auto-startup: false
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 # Application-specific settings
 app:
@@ -21,6 +25,8 @@ app:
     topics:
       weather: weather
       weather-dlq: weather-dlq
+      student: student-events
+      student-dlq: student-events-dlq
     retry:
       attempts: 3
       backoff: 1000
@@ -46,6 +52,3 @@ management:
 # Graceful shutdown
 server:
   shutdown: graceful
-spring:
-  lifecycle:
-    timeout-per-shutdown-phase: 30s

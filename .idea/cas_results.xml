@@ -40,5 +40,10 @@
         </entry>
       </map>
     </option>
+    <option name="summary">
+      <ScanSummary>
+        <option name="passed" value="60" />
+      </ScanSummary>
+    </option>
   </component>
 </project>
